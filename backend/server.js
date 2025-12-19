@@ -37,8 +37,9 @@ const corsOptions = {
     ? [
         process.env.FRONTEND_URL || 'https://e-commerce-app-frontend.vercel.app',
         process.env.ADMIN_URL || 'https://e-commerce-app-admin.vercel.app',
-        // Add the actual frontend URL from the error
+        // Add the actual URLs from deployments
         'https://e-commerce-app-8ajd-8m66nrg5d-birhanu-mulus-projects.vercel.app',
+        'https://e-commerce-app-jgug-31bl4e1ao-birhanu-mulus-projects.vercel.app',
         // Fallback patterns for your deployment
         'https://e-commerce-app-*.vercel.app',
         // Allow all subdomains for Vercel preview deployments
