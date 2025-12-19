@@ -35,9 +35,10 @@ app.use(express.json());
 const corsOptions = {
   origin: process.env.NODE_ENV === 'production' 
     ? [
-        'https://your-frontend.vercel.app',
-        'https://your-admin.vercel.app',
-        // Add your actual Vercel URLs here after deployment
+        process.env.FRONTEND_URL || 'https://e-commerce-app-frontend.vercel.app',
+        process.env.ADMIN_URL || 'https://e-commerce-app-admin.vercel.app',
+        // Fallback patterns for your deployment
+        'https://e-commerce-app-*.vercel.app',
       ]
     : ['http://localhost:5173', 'http://localhost:5174', 'http://localhost:3000'],
   credentials: true,

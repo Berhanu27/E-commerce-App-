@@ -28,18 +28,16 @@ JWT_SECRET=brexman12345
 ADMIN_EMAIL=berhanumulu2024@gmail.com
 ADMIN_PASSWORD=br21348555ml
 CHAPA_SECRET_KEY=CHASECK_TEST-CT9xBuocClVtf9tIJwcy2KeaqRwFyLSx
-MPESA_CONSUMER_KEY=your_mpesa_consumer_key
-MPESA_CONSUMER_SECRET=your_mpesa_consumer_secret
+MPESA_CONSUMER_KEY=V53Gxzl31pnaB6u5viGPM22PGYbAJraoIi4w3WgRLyZrXYjL
+MPESA_CONSUMER_SECRET=HtfYCC3d2tdEavUmj1dcY0uVUrFGR3UsBIdCw9G0Ja50IKPN2lsfwNWieaf971N6
 MPESA_ENVIRONMENT=sandbox
-MPESA_BUSINESS_SHORT_CODE=174379
-MPESA_PASSKEY=your_mpesa_passkey
-MPESA_CALLBACK_URL=https://your-backend-url.vercel.app/api/order/mpesa/callback
+MPESA_CALLBACK_URL=https://e-commerce-app-m352.vercel.app/api/order/mpesa/callback
 ```
 
 ### 3️⃣ Update Frontend Environment
 ```bash
 # Update frontend/.env.production with your backend URL
-echo "VITE_BACKEND_URL=https://your-backend-url.vercel.app" > frontend/.env.production
+echo "VITE_BACKEND_URL=https://e-commerce-app-m352.vercel.app" > frontend/.env.production
 ```
 
 ### 4️⃣ Deploy Frontend
@@ -51,7 +49,7 @@ vercel
 ### 5️⃣ Update Admin Environment
 ```bash
 # Update admin/.env.production with your backend URL
-echo "VITE_BACKEND_URL=https://your-backend-url.vercel.app" > admin/.env.production
+echo "VITE_BACKEND_URL=https://e-commerce-app-m352.vercel.app" > admin/.env.production
 ```
 
 ### 6️⃣ Deploy Admin
