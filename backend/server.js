@@ -37,8 +37,12 @@ const corsOptions = {
     ? [
         process.env.FRONTEND_URL || 'https://e-commerce-app-frontend.vercel.app',
         process.env.ADMIN_URL || 'https://e-commerce-app-admin.vercel.app',
+        // Add the actual frontend URL from the error
+        'https://e-commerce-app-8ajd-8m66nrg5d-birhanu-mulus-projects.vercel.app',
         // Fallback patterns for your deployment
         'https://e-commerce-app-*.vercel.app',
+        // Allow all subdomains for Vercel preview deployments
+        /https:\/\/.*\.vercel\.app$/,
       ]
     : ['http://localhost:5173', 'http://localhost:5174', 'http://localhost:3000'],
   credentials: true,
@@ -62,6 +66,17 @@ app.use('/api/order', orderRouter); // ✅ Now matches import
 
 app.get('/', (req, res) => {
   res.send('API WORKING');
+});
+
+// Debug endpoint to check CORS and environment
+app.get('/debug', (req, res) => {
+  res.json({
+    message: 'Debug endpoint',
+    origin: req.headers.origin,
+    nodeEnv: process.env.NODE_ENV,
+    corsOrigins: corsOptions.origin,
+    timestamp: new Date().toISOString()
+  });
 });
 
 // For Vercel serverless deployment
