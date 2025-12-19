@@ -2,7 +2,15 @@ import mongoose from "mongoose";
 
 const connectDB = async () => {
   try {
-    await mongoose.connect(process.env.MONGO_URL);   // ← THIS USES "ecommerce" FROM .env
+    // Prevent multiple connections in serverless environment
+    if (mongoose.connections[0].readyState) {
+      console.log('Already connected to MongoDB');
+      return;
+    }
+
+    await mongoose.connect(process.env.MONGO_URL, {
+      bufferCommands: false, // Disable mongoose buffering for serverless
+    });
 
     console.log("DB Connected Successfully");
 
@@ -16,7 +24,8 @@ const connectDB = async () => {
 
   } catch (error) {
     console.error("DB Connection Failed:", error.message);
-    process.exit(1);
+    // Don't exit process in serverless environment
+    throw error;
   }
 };
 

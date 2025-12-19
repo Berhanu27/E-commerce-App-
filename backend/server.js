@@ -12,7 +12,7 @@ import orderRouter from './route/orderRoute.js'; // ✅ Fixed typo: "ordrRouter"
 const app = express();
 const port = process.env.PORT || 4000;
 
-// Connect DB
+// Connect DB with better error handling for serverless
 connectDB().then(() => {
   console.log('DB Connected Successfully');
 
@@ -21,6 +21,9 @@ connectDB().then(() => {
   delete mongoose.connection.models["Product"];
   delete mongoose.models["product"];
   delete mongoose.models["Product"];
+}).catch((error) => {
+  console.error('DB Connection Failed:', error);
+  // Don't exit process in serverless environment
 });
 
 connectCloudinary();
@@ -60,6 +63,12 @@ app.get('/', (req, res) => {
   res.send('API WORKING');
 });
 
-app.listen(port, () => {
-  console.log('Server started on PORT:', port);
-});
+// For Vercel serverless deployment
+export default app;
+
+// For local development
+if (process.env.NODE_ENV !== 'production') {
+  app.listen(port, () => {
+    console.log('Server started on PORT:', port);
+  });
+}
