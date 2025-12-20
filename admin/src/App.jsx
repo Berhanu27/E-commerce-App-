@@ -9,8 +9,8 @@ import Login from "./components/Login";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-// Remove trailing slash from backend URL to prevent double slashes
-export const backendUrl = (import.meta.env.VITE_BACKEND_URL || "http://localhost:4000").replace(/\/$/, '');
+// Hardcoded backend URL for production
+export const backendUrl = 'https://e-commerce-app-seven-mocha.vercel.app';
 export const currency = "$";
 
 const App = () => {
