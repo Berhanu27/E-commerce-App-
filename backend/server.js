@@ -71,8 +71,8 @@ const corsOptions = {
   optionsSuccessStatus: 200
 };
 
-// Handle preflight requests
-app.options('*', cors(corsOptions));
+// Handle preflight requests - use '{/*path}' instead of '*' for Express 5
+app.options('/{*path}', cors(corsOptions));
 app.use(cors(corsOptions));
 
 // Add request logging
