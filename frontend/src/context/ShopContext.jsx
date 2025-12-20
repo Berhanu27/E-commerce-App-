@@ -8,7 +8,8 @@ export const ShopContext = createContext();
 const ShopContextProvider = ({ children }) => {
   const currency = '$';
   const delivery_fee = 10;
-  const backendUrl = import.meta.env.VITE_BACKEND_URL;
+  // Remove trailing slash from backend URL to prevent double slashes
+  const backendUrl = (import.meta.env.VITE_BACKEND_URL || 'http://localhost:4000').replace(/\/$/, '');
 
   const [productsList, setProductsList] = useState([]);
   const [products, setProducts] = useState([]);
