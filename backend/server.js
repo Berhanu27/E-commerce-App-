@@ -31,26 +31,48 @@ connectCloudinary();
 // Middlewares
 app.use(express.json());
 
-// CORS configuration for production
+// CORS configuration - Allow all origins for now to fix deployment issues
+const allowedOrigins = [
+  // Production URLs
+  'https://e-commerce-app-lfz6.vercel.app',
+  'https://e-commerce-app-tgr8.vercel.app',
+  'https://e-commerce-app-seven-mocha.vercel.app',
+  // Environment variable URLs
+  process.env.FRONTEND_URL,
+  process.env.ADMIN_URL,
+  // Local development
+  'http://localhost:5173',
+  'http://localhost:5174',
+  'http://localhost:3000',
+].filter(Boolean);
+
 const corsOptions = {
-  origin: process.env.NODE_ENV === 'production' 
-    ? [
-        process.env.FRONTEND_URL,
-        process.env.ADMIN_URL,
-        // Add the actual URLs from deployments
-        'https://e-commerce-app-lfz6.vercel.app',
-        'https://e-commerce-app-tgr8.vercel.app',
-        'https://e-commerce-app-8ajd-8m66nrg5d-birhanu-mulus-projects.vercel.app',
-        'https://e-commerce-app-jgug-31bl4e1ao-birhanu-mulus-projects.vercel.app',
-        // Allow all Vercel preview deployments
-        /https:\/\/.*\.vercel\.app$/,
-      ].filter(Boolean)
-    : ['http://localhost:5173', 'http://localhost:5174', 'http://localhost:3000'],
+  origin: function (origin, callback) {
+    // Allow requests with no origin (like mobile apps or curl requests)
+    if (!origin) return callback(null, true);
+    
+    // Check if origin is in allowed list
+    if (allowedOrigins.includes(origin)) {
+      return callback(null, true);
+    }
+    
+    // Allow all vercel.app subdomains
+    if (origin.endsWith('.vercel.app')) {
+      return callback(null, true);
+    }
+    
+    // Block other origins
+    console.log('CORS blocked origin:', origin);
+    return callback(null, true); // Allow all for now to debug
+  },
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization', 'token']
+  allowedHeaders: ['Content-Type', 'Authorization', 'token'],
+  optionsSuccessStatus: 200
 };
 
+// Handle preflight requests
+app.options('*', cors(corsOptions));
 app.use(cors(corsOptions));
 
 // Add request logging
