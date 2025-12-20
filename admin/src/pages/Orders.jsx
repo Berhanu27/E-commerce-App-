@@ -9,7 +9,12 @@ const Orders = ({ token }) => {
   const currency = "$";
 
   const fetchAllOrders = async () => {
-    if (!token) return;
+    if (!token) {
+      console.log("No token available");
+      return;
+    }
+
+    console.log("Fetching orders with backend URL:", backendUrl);
 
     try {
       const response = await axios.get(`${backendUrl}/api/order/list`, {
@@ -30,7 +35,7 @@ const Orders = ({ token }) => {
   const statusHandler = async (event, orderId) => {
     try {
       const response = await axios.post(
-        backendUrl + "/api/order/status",
+        `${backendUrl}/api/order/status`,
         { orderId, status: event.target.value },
         { headers: { Authorization: `Bearer ${token}` } }
       );
