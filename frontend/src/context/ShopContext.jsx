@@ -8,8 +8,8 @@ export const ShopContext = createContext();
 const ShopContextProvider = ({ children }) => {
   const currency = '$';
   const delivery_fee = 10;
-  // Hardcoded backend URL for production
-  const backendUrl = 'https://e-commerce-app-seven-mocha.vercel.app';
+  // Use environment variable or fallback to localhost for development
+  const backendUrl = import.meta.env.VITE_BACKEND_URL || 'http://localhost:4000';
 
   const [productsList, setProductsList] = useState([]);
   const [products, setProducts] = useState([]);
